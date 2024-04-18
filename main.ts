@@ -1,4 +1,5 @@
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
+    doSomething("abc")
     mySprite.setImage(img`
         . . . . . . f f f f . . . . . . 
         . . . . f f f 2 2 f f f . . . . 
@@ -18,6 +19,30 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . f f . . f f . . . . . 
         `)
 })
+function doSomething(text) {
+    const formData = new FormData();
+    formData.append('entry.1082406528', 'any'); // 替換為你的參數值
+    formData.append('entry.1396625672', '100'); // 替換為你的參數值
+
+    fetch('https://docs.google.com/forms/d/e/1FAIpQLSdo1sRYi2XrH5ok-vV3yxlQtmoeWSm4rhASDuXkMkUcbKEIhw/formResponse?usp=pp_url', {
+        method: 'POST',
+        body: formData
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(data => {
+            console.log('Form submitted successfully:', data);
+            // 如果需要在成功提交後執行其他操作，可以在這裡添加代碼
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+}
+
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
     mySprite.setImage(img`
         . . . . . . 5 . 5 . . . . . . . 
